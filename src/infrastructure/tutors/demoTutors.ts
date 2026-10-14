@@ -1,0 +1,63 @@
+import type { Tutor } from '../../domain/tutors/Tutor'
+
+// Personas y contactos ficticios, exclusivamente para la demostración.
+export const demoTutors: Tutor[] = [
+  {
+    id: 'tutor-1',
+    firstName: 'Lucía',
+    lastName: 'Ramírez Torres',
+    dni: '00000001',
+    phone: '900000001',
+    email: 'lucia@example.com',
+    address: 'Calle Demo 120',
+    district: 'Miraflores',
+    pets: [
+      { id: 'pet-1', name: 'Luna', species: 'Perro' },
+      { id: 'pet-2', name: 'Milo', species: 'Gato' },
+    ],
+  },
+  {
+    id: 'tutor-2',
+    firstName: 'Diego',
+    lastName: 'Vargas Medina',
+    dni: '00000002',
+    phone: '900000002',
+    email: 'diego@example.com',
+    address: 'Av. Ejemplo 245',
+    district: 'San Borja',
+    pets: [{ id: 'pet-3', name: 'Rocky', species: 'Perro' }],
+  },
+  {
+    id: 'tutor-3',
+    firstName: 'Valeria',
+    lastName: 'Rojas Castillo',
+    dni: '00000003',
+    phone: '900000003',
+    email: 'valeria@example.com',
+    address: 'Jirón Demo 56',
+    district: 'Surco',
+    pets: [{ id: 'pet-4', name: 'Nala', species: 'Gato' }],
+  },
+  {
+    id: 'tutor-4',
+    firstName: 'Mateo',
+    lastName: 'Flores Sánchez',
+    dni: '00000004',
+    phone: '900000004',
+    email: 'mateo@example.com',
+    address: 'Calle Ejemplo 89',
+    district: 'La Molina',
+    pets: [],
+  },
+  {
+    id: 'tutor-5',
+    firstName: 'Camila',
+    lastName: 'Herrera Díaz',
+    dni: '00000005',
+    phone: '900000005',
+    email: 'camila@example.com',
+    address: 'Av. Demo 310',
+    district: 'Los Olivos',
+    pets: [{ id: 'pet-5', name: 'Toby', species: 'Perro' }],
+  },
+]
