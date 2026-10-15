@@ -1,10 +1,11 @@
 import type { TutorRepository } from '../../application/tutors/TutorRepository'
 import { validateTutor, type Tutor } from '../../domain/tutors/Tutor.ts'
 import { demoTutors } from './demoTutors.ts'
+import { demoStorageKeys } from '../demo/demoStorageKeys.ts'
 
-const STORAGE_KEY = 'patitas-demo.tutors.v1'
+const STORAGE_KEY = demoStorageKeys.tutors
 
-function isTutor(value: unknown): value is Tutor {
+export function isTutor(value: unknown): value is Tutor {
   if (!value || typeof value !== 'object') return false
   const record = value as Record<string, unknown>
   if (typeof record.id !== 'string' || !record.id) return false

@@ -23,10 +23,12 @@ export function ClinicalPage({
   service,
   petService,
   tutorService,
+  initialPetId,
 }: {
   service: ClinicalService
   petService: PetService
   tutorService: TutorService
+  initialPetId?: string
 }) {
   const [pets, setPets] = useState<Pet[]>([]),
     [tutors, setTutors] = useState<Tutor[]>([]),
@@ -34,7 +36,7 @@ export function ClinicalPage({
   const [loading, setLoading] = useState(true),
     [error, setError] = useState(''),
     [retry, setRetry] = useState(0)
-  const [selectedId, setSelectedId] = useState(''),
+  const [selectedId, setSelectedId] = useState(initialPetId ?? ''),
     [query, setQuery] = useState(''),
     [filter, setFilter] = useState('Todas'),
     [notice, setNotice] = useState(''),
@@ -120,7 +122,6 @@ export function ClinicalPage({
             Consultas, vacunas y seguimiento de cada mascota.
           </p>
         </div>
-        <span className="demo-label">Datos de demostración</span>
       </div>
       {notice && (
         <div className="success-notice mt-6" role="status">

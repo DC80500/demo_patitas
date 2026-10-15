@@ -1,11 +1,11 @@
 import type { ClinicalEntry } from '../../domain/clinical/ClinicalEntry'
 const defaults = {
-  veterinarian: 'Veterinario Demo',
+  veterinarian: 'M.V. Mariana Salazar',
   reason: '',
   diagnosis: '',
   treatment: '',
   vaccine: '',
-  notes: 'Atención ficticia para presentar el funcionamiento de la plataforma.',
+  notes: '',
   nextVisit: '',
 }
 export const demoClinicalEntries: ClinicalEntry[] = [
@@ -16,8 +16,10 @@ export const demoClinicalEntries: ClinicalEntry[] = [
     kind: 'Consulta',
     date: '2026-09-05',
     reason: 'Control de bienestar',
-    diagnosis: 'Evaluación general registrada en la demo.',
-    treatment: 'Seguimiento indicado por el veterinario de demostración.',
+    diagnosis: 'Buen estado general durante la evaluación clínica.',
+    treatment: 'Seguimiento en el próximo control.',
+    notes:
+      'Se revisó el estado general y se actualizaron los datos de la ficha.',
     nextVisit: '2026-10-20',
   },
   {
@@ -26,7 +28,8 @@ export const demoClinicalEntries: ClinicalEntry[] = [
     petId: 'pet-1',
     kind: 'Vacuna',
     date: '2026-09-15',
-    vaccine: 'Vacuna de ejemplo',
+    vaccine: 'Antirrábica',
+    notes: 'Aplicación registrada en el carné de vacunación.',
     nextVisit: '2026-11-15',
   },
   {
@@ -36,26 +39,8 @@ export const demoClinicalEntries: ClinicalEntry[] = [
     kind: 'Consulta',
     date: '2026-09-10',
     reason: 'Consulta de rutina',
-    diagnosis: 'Control general de demostración.',
-    treatment: 'Observaciones de seguimiento registradas en la demo.',
-  },
-  {
-    ...defaults,
-    id: 'clinical-4',
-    petId: 'pet-3',
-    kind: 'Vacuna',
-    date: '2026-09-18',
-    vaccine: 'Vacuna de ejemplo',
-    nextVisit: '2026-10-18',
-  },
-  {
-    ...defaults,
-    id: 'clinical-5',
-    petId: 'pet-4',
-    kind: 'Consulta',
-    date: '2026-09-22',
-    reason: 'Revisión de bienestar',
-    diagnosis: 'Evaluación ficticia completada.',
-    nextVisit: '2026-10-22',
+    diagnosis: 'Sin alteraciones en la evaluación general.',
+    treatment: 'Continuar con los controles habituales.',
+    notes: 'Se revisó el historial y se orientó al tutor sobre el seguimiento.',
   },
 ]

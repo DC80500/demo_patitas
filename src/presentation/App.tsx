@@ -15,6 +15,12 @@ import './styles/Pets.css'
 import './styles/Clinical.css'
 import type { ClinicalService } from '../application/clinical/ClinicalService'
 import { ClinicalPage } from './pages/clinical/ClinicalPage'
+import type { GuidedStoryRepository } from '../application/guidedStory/GuidedStoryRepository'
+import { GuidedStoryExperience } from './components/GuidedStoryExperience'
+import './styles/GuidedStory.css'
+import type { PresentationDataReset } from '../application/demo/PresentationDataReset'
+import { ResetPresentationData } from './components/ResetPresentationData'
+import './styles/PresentationReset.css'
 
 function App({
   signIn,
@@ -22,36 +28,79 @@ function App({
   tutors,
   pets,
   clinical,
+  storyRepository,
+  presentationReset,
 }: {
   signIn: SignIn
   initialCredentials: Readonly<Credentials>
   tutors: TutorService
   pets: PetService
   clinical: ClinicalService
+  storyRepository: GuidedStoryRepository
+  presentationReset: PresentationDataReset
 }) {
   const [user, setUser] = useState<User | null>(null)
   const [page, setPage] = useState<PanelPage>('welcome')
+  const [clinicalPetId, setClinicalPetId] = useState<string>()
+  const [presentationRevision, setPresentationRevision] = useState(0)
+  function navigate(next: PanelPage) {
+    setClinicalPetId(undefined)
+    setPage(next)
+  }
+  function viewHistory(petId: string) {
+    setClinicalPetId(petId)
+    setPage('clinical')
+  }
   return user ? (
     <AppShell
       user={user}
       activePage={page}
-      onNavigate={setPage}
+      onNavigate={navigate}
       onSignOut={() => {
         setUser(null)
         setPage('welcome')
+        setClinicalPetId(undefined)
       }}
     >
-      {page === 'welcome' ? (
-        <WelcomePage user={user} />
-      ) : page === 'tutors' ? (
-        <TutorsPage service={tutors} />
-      ) : page === 'pets' ? (
-        <PetsPage service={pets} tutorService={tutors} />
-      ) : (
-        <ClinicalPage
-          service={clinical}
-          petService={pets}
-          tutorService={tutors}
+      <GuidedStoryExperience
+        key={presentationRevision}
+        repository={storyRepository}
+        tutors={tutors}
+        pets={pets}
+        clinical={clinical}
+        page={page}
+        onNavigate={navigate}
+        onViewHistory={viewHistory}
+      >
+        {(revision) =>
+          page === 'welcome' ? (
+            <WelcomePage key={`welcome-${revision}`} user={user} />
+          ) : page === 'tutors' ? (
+            <TutorsPage key={`tutors-${revision}`} service={tutors} />
+          ) : page === 'pets' ? (
+            <PetsPage
+              key={`pets-${revision}`}
+              service={pets}
+              tutorService={tutors}
+            />
+          ) : (
+            <ClinicalPage
+              key={`clinical-${revision}-${clinicalPetId ?? 'all'}`}
+              service={clinical}
+              petService={pets}
+              tutorService={tutors}
+              initialPetId={clinicalPetId}
+            />
+          )
+        }
+      </GuidedStoryExperience>
+      {page === 'welcome' && (
+        <ResetPresentationData
+          resetter={presentationReset}
+          onReset={() => {
+            setClinicalPetId(undefined)
+            setPresentationRevision((current) => current + 1)
+          }}
         />
       )}
     </AppShell>

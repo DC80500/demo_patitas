@@ -12,10 +12,18 @@ import { PetService } from './application/pets/PetService'
 import { ClinicalService } from './application/clinical/ClinicalService'
 import { LocalClinicalRepository } from './infrastructure/clinical/LocalClinicalRepository'
 import { localToday } from './presentation/utils/calendarDate'
+import { migrateDemoData } from './infrastructure/demo/migrateDemoData'
+import { LocalGuidedStoryRepository } from './infrastructure/guidedStory/LocalGuidedStoryRepository'
+import { LocalPresentationDataReset } from './infrastructure/demo/LocalPresentationDataReset'
 
 const signIn = new SignIn(new DemoAuthRepository())
-const tutorRepository = new LocalTutorRepository(() => window.localStorage)
-const petRepository = new LocalPetRepository(() => window.localStorage)
+const getDemoStorage = () => {
+  const storage = window.localStorage
+  migrateDemoData(storage)
+  return storage
+}
+const tutorRepository = new LocalTutorRepository(getDemoStorage)
+const petRepository = new LocalPetRepository(getDemoStorage)
 const tutors = new TutorService(
   tutorRepository,
   () => crypto.randomUUID(),
@@ -25,10 +33,16 @@ const pets = new PetService(petRepository, tutorRepository, () =>
   crypto.randomUUID(),
 )
 const clinical = new ClinicalService(
-  new LocalClinicalRepository(() => window.localStorage),
+  new LocalClinicalRepository(getDemoStorage),
   petRepository,
   () => crypto.randomUUID(),
   localToday,
+)
+const storyRepository = new LocalGuidedStoryRepository(
+  () => window.localStorage,
+)
+const presentationReset = new LocalPresentationDataReset(
+  () => window.localStorage,
 )
 
 createRoot(document.getElementById('root')!).render(
@@ -39,6 +53,8 @@ createRoot(document.getElementById('root')!).render(
       tutors={tutors}
       pets={pets}
       clinical={clinical}
+      storyRepository={storyRepository}
+      presentationReset={presentationReset}
     />
   </StrictMode>,
 )

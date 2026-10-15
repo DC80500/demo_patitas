@@ -1,8 +1,9 @@
 import type { PetRepository } from '../../application/pets/PetRepository'
 import { validatePet, type Pet } from '../../domain/pets/Pet.ts'
 import { demoPets } from './demoPets.ts'
-const KEY = 'patitas-demo.pets.v1'
-function isPet(value: unknown): value is Pet {
+import { demoStorageKeys } from '../demo/demoStorageKeys.ts'
+const KEY = demoStorageKeys.pets
+export function isPet(value: unknown): value is Pet {
   if (!value || typeof value !== 'object') return false
   const record = value as Record<string, unknown>
   for (const field of [

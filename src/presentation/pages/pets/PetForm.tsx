@@ -65,14 +65,18 @@ export function PetForm({
   service,
   onSaved,
   onClose,
+  initialTutorId,
 }: {
   pet?: Pet
   tutors: Tutor[]
   service: PetService
   onSaved: (pet: Pet) => void
   onClose: () => void
+  initialTutorId?: string
 }) {
-  const [values, setValues] = useState<PetInput>(pet ?? empty)
+  const [values, setValues] = useState<PetInput>(
+    pet ?? { ...empty, tutorId: initialTutorId ?? '' },
+  )
   const [step, setStep] = useState(0)
   const [errors, setErrors] = useState<PetErrors>({})
   const [message, setMessage] = useState('')

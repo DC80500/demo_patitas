@@ -121,7 +121,6 @@ export function TutorsPage({ service }: { service: TutorService }) {
             <span>Mascotas asociadas</span>
           </div>
         </div>
-        <span className="demo-label">Datos de demostración</span>
       </div>
       {notice && (
         <div className="success-notice" role="status">

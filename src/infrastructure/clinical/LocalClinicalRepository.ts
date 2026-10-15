@@ -4,8 +4,9 @@ import {
   type ClinicalEntry,
 } from '../../domain/clinical/ClinicalEntry.ts'
 import { demoClinicalEntries } from './demoClinicalEntries.ts'
-const KEY = 'patitas-demo.clinical.v1'
-function isEntry(value: unknown): value is ClinicalEntry {
+import { demoStorageKeys } from '../demo/demoStorageKeys.ts'
+const KEY = demoStorageKeys.clinical
+export function isEntry(value: unknown): value is ClinicalEntry {
   if (!value || typeof value !== 'object') return false
   const entry = value as Record<string, unknown>
   if (

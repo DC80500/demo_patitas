@@ -46,7 +46,7 @@ test('consultation normalizes data, persists and keeps other pet histories', asy
   assert.equal(created.veterinarian, 'Veterinario Demo')
   assert.equal(created.petId, 'pet-1')
   const persisted = await new LocalClinicalRepository(storage).list()
-  assert.equal(persisted.length, 6)
+  assert.equal(persisted.length, 4)
   assert.deepEqual(
     persisted.find((entry) => entry.id === created.id),
     created,
@@ -77,7 +77,7 @@ test('invalid dates, future attention and earlier follow-up are rejected', async
       service.register({ ...input, ...values }),
       (error) => error instanceof ClinicalValidationError,
     )
-  assert.equal((await service.list()).length, 5)
+  assert.equal((await service.list()).length, 3)
   await service.register({
     ...input,
     date: '2024-02-29',
@@ -97,13 +97,13 @@ test('missing clinical fields and unknown pets never create records', async () =
       service.register({ ...input, ...values }),
       (error) => error instanceof ClinicalValidationError,
     )
-  assert.equal((await service.list()).length, 5)
+  assert.equal((await service.list()).length, 3)
 })
 test('corrupt persisted data stays intact and unavailable storage is reported', async () => {
   const { storage, entries, repo } = setup()
-  storage.setItem('patitas-demo.clinical.v1', 'broken')
+  storage.setItem('patitas-demo.clinical.v2', 'broken')
   await assert.rejects(repo.list(), /no son válidos/)
-  assert.equal(entries.get('patitas-demo.clinical.v1'), 'broken')
+  assert.equal(entries.get('patitas-demo.clinical.v2'), 'broken')
   await assert.rejects(
     new LocalClinicalRepository(() => {
       throw new Error('blocked')
@@ -118,7 +118,7 @@ test('write failure is surfaced without creating an attention', async () => {
     throw new Error('quota')
   }
   await assert.rejects(service.register(input), /No se pudo guardar/)
-  assert.equal((await service.list()).length, 5)
+  assert.equal((await service.list()).length, 3)
 })
 test('complete demo connects new tutor, approved pet and clinical attention', async () => {
   const { storage, pets, service } = setup()

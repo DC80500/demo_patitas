@@ -32,8 +32,8 @@ test('new pet persists with its own sequential registration and pending status',
   const first = await service.save(input)
   const second = await service.save({ ...input, microchip: '' })
   assert.equal(first.name, 'Copito')
-  assert.equal(first.registration, 'PA-000006')
-  assert.equal(second.registration, 'PA-000007')
+  assert.equal(first.registration, 'PA-000005')
+  assert.equal(second.registration, 'PA-000006')
   assert.notEqual(first.id, second.id)
   assert.equal(first.status, 'Pendiente')
   assert.deepEqual(
@@ -51,7 +51,7 @@ test('approval enables identity; editing preserves number and requires approval 
   const edited = await service.save({ ...approved, color: 'Blanco' }, pet.id)
   assert.equal(edited.registration, pet.registration)
   assert.equal(edited.status, 'Pendiente')
-  assert.equal((await service.list()).length, 6)
+  assert.equal((await service.list()).length, 5)
 })
 test('changing tutor updates both tutors associations from pet records', async () => {
   const { service, tutors } = setup()
@@ -60,13 +60,14 @@ test('changing tutor updates both tutors associations from pet records', async (
     (await tutors.list()).find((tutor) => tutor.id === 'tutor-1').pets.length,
     3,
   )
-  await service.save({ ...pet, tutorId: 'tutor-4' }, pet.id)
+  await service.save({ ...pet, tutorId: 'tutor-3' }, pet.id)
   const owners = await tutors.list()
   assert.equal(owners.find((tutor) => tutor.id === 'tutor-1').pets.length, 2)
-  assert.deepEqual(owners.find((tutor) => tutor.id === 'tutor-4').pets, [
+  assert.deepEqual(owners.find((tutor) => tutor.id === 'tutor-3').pets, [
+    { id: 'pet-4', name: 'Nala', species: 'Gato' },
     { id: pet.id, name: 'Copito', species: 'Perro' },
   ])
-  const owner = owners.find((tutor) => tutor.id === 'tutor-4')
+  const owner = owners.find((tutor) => tutor.id === 'tutor-3')
   const editedTutor = await tutors.save(
     { ...owner, address: 'Calle Demo 404' },
     owner.id,
@@ -87,7 +88,7 @@ test('invalid owner, age and duplicate microchip do not create records', async (
   await assert.rejects(service.save(input), (error) =>
     Boolean(error.fields.microchip),
   )
-  assert.equal((await service.list()).length, 6)
+  assert.equal((await service.list()).length, 5)
 })
 test('unsafe photo values are rejected and valid image data persists', async () => {
   const { service } = setup()
@@ -110,9 +111,9 @@ test('corrupt and duplicate persisted numbers are reported without overwriting d
     demoPets[0],
     { ...demoPets[1], registration: demoPets[0].registration },
   ])
-  storage.setItem('patitas-demo.pets.v1', raw)
+  storage.setItem('patitas-demo.pets.v2', raw)
   await assert.rejects(repo.list(), /no son válidos/)
-  assert.equal(entries.get('patitas-demo.pets.v1'), raw)
+  assert.equal(entries.get('patitas-demo.pets.v2'), raw)
 })
 test('failed writes never report approval success', async () => {
   const { service, storage } = setup()

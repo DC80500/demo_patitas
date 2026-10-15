@@ -36,7 +36,7 @@ test('registration persists across repository instances and normalizes input', a
   assert.equal(created.firstName, 'Andrea')
   assert.equal(created.email, 'andrea@example.com')
   const persisted = await new LocalTutorRepository(storage).list()
-  assert.equal(persisted.length, 6)
+  assert.equal(persisted.length, 4)
   assert.deepEqual(
     persisted.find((tutor) => tutor.id === created.id),
     created,
@@ -56,7 +56,7 @@ test('duplicate DNI and invalid contact details never create another tutor', asy
       Boolean(error.fields.phone) &&
       Boolean(error.fields.email),
   )
-  assert.equal((await service.list()).length, 5)
+  assert.equal((await service.list()).length, 3)
 })
 test('editing retains associated pets and permits unchanged DNI', async () => {
   const { service } = setup()
@@ -64,16 +64,16 @@ test('editing retains associated pets and permits unchanged DNI', async () => {
   const edited = await service.save({ ...tutor, phone: '900000098' }, tutor.id)
   assert.deepEqual(edited.pets, tutor.pets)
   assert.equal(edited.phone, '900000098')
-  assert.equal((await service.list()).length, 5)
+  assert.equal((await service.list()).length, 3)
 })
 test('invalid saved data is reported without overwriting the original', async () => {
   const { entries, storage } = setup()
-  storage.setItem('patitas-demo.tutors.v1', 'broken')
+  storage.setItem('patitas-demo.tutors.v2', 'broken')
   await assert.rejects(
     new LocalTutorRepository(storage).list(),
     /no son válidos/,
   )
-  assert.equal(entries.get('patitas-demo.tutors.v1'), 'broken')
+  assert.equal(entries.get('patitas-demo.tutors.v2'), 'broken')
 })
 test('storage failure is surfaced instead of reporting a successful save', async () => {
   const repository = new LocalTutorRepository({

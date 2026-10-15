@@ -11,14 +11,18 @@ export function SmartDni({
   pet,
   tutor,
   onClose,
+  onReady,
+  closeLabel = 'Volver a la ficha',
 }: {
   pet: Pet
   tutor: Tutor
   onClose: () => void
+  onReady?: () => void
+  closeLabel?: string
 }) {
   const [qr, setQr] = useState('')
   const [error, setError] = useState('')
-  const content = `Patitas de Amor | DEMO\nRegistro: ${pet.registration}\nMascota: ${pet.name}\nEspecie: ${pet.species}\nTutor: ${tutor.firstName} ${tutor.lastName}\nContacto: ${tutor.phone}`
+  const content = `Patitas de Amor | Identificación de mascota\nRegistro: ${pet.registration}\nMascota: ${pet.name}\nEspecie: ${pet.species}\nTutor: ${tutor.firstName} ${tutor.lastName}\nContacto: ${tutor.phone}`
   useEffect(() => {
     let active = true
     QRCode.toDataURL(content, {
@@ -27,7 +31,10 @@ export function SmartDni({
       errorCorrectionLevel: 'M',
     })
       .then((value) => {
-        if (active) setQr(value)
+        if (active) {
+          setQr(value)
+          onReady?.()
+        }
       })
       .catch(() => {
         if (active) setError('No se pudo generar el QR. Vuelve a abrir el DNI.')
@@ -35,7 +42,7 @@ export function SmartDni({
     return () => {
       active = false
     }
-  }, [content])
+  }, [content, onReady])
   return (
     <Modal title="DNI Smart" eyebrow="IDENTIFICACIÓN DIGITAL" onClose={onClose}>
       <div className="modal-body">
@@ -97,13 +104,13 @@ export function SmartDni({
             </p>
           </div>
           <p className="muted text-center text-xs">
-            Documento de demostración · Sin validez oficial
+            Identificación de mascota · Sin validez oficial
           </p>
         </article>
       </div>
       <div className="modal-actions">
-        <button className="button primary" onClick={onClose}>
-          Volver a la ficha
+        <button className="button primary" onClick={onClose} disabled={!qr}>
+          {closeLabel}
         </button>
       </div>
     </Modal>

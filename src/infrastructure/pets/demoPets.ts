@@ -1,4 +1,5 @@
 import type { Pet, PetInput } from '../../domain/pets/Pet'
+import { demoPetPhotos } from './demoPetPhotos.ts'
 const defaults: PetInput = {
   tutorId: '',
   name: '',
@@ -10,17 +11,18 @@ const defaults: PetInput = {
   color: 'Crema',
   photo: '',
   microchip: '',
-  vaccines: 'Vacunas al día (datos ficticios).',
+  vaccines: 'Vacunas al día.',
   sterilized: 'Sí',
   notes: '',
-  vetName: 'Clínica Veterinaria Demo',
+  vetName: 'Consultorio Veterinario Patitas',
   vetPhone: '900000090',
-  vetAddress: 'Av. Ejemplo 100',
+  vetAddress: 'Av. José Larco, Miraflores',
 }
 export const demoPets: Pet[] = [
   {
     ...defaults,
     id: 'pet-1',
+    photo: demoPetPhotos['pet-1'],
     tutorId: 'tutor-1',
     name: 'Luna',
     registration: 'PA-000001',
@@ -29,6 +31,7 @@ export const demoPets: Pet[] = [
   {
     ...defaults,
     id: 'pet-2',
+    photo: demoPetPhotos['pet-2'],
     tutorId: 'tutor-1',
     name: 'Milo',
     species: 'Gato',
@@ -40,6 +43,7 @@ export const demoPets: Pet[] = [
   {
     ...defaults,
     id: 'pet-3',
+    photo: demoPetPhotos['pet-3'],
     tutorId: 'tutor-2',
     name: 'Rocky',
     sex: 'Macho',
@@ -52,6 +56,7 @@ export const demoPets: Pet[] = [
   {
     ...defaults,
     id: 'pet-4',
+    photo: demoPetPhotos['pet-4'],
     tutorId: 'tutor-3',
     name: 'Nala',
     species: 'Gato',
@@ -59,17 +64,5 @@ export const demoPets: Pet[] = [
     color: 'Blanco',
     registration: 'PA-000004',
     status: 'Aprobado',
-  },
-  {
-    ...defaults,
-    id: 'pet-5',
-    tutorId: 'tutor-5',
-    name: 'Toby',
-    sex: 'Macho',
-    age: 3,
-    color: 'Negro',
-    sterilized: 'No informado',
-    registration: 'PA-000005',
-    status: 'Pendiente',
   },
 ]
