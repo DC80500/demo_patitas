@@ -92,7 +92,7 @@ Una guía muestra el progreso y la siguiente acción. Se puede cerrar un formula
 
 El cierre ofrece las fichas del tutor y la mascota y el historial clínico seleccionado. «Crear otra historia» inicia otro recorrido sin borrar registros previos. Las reglas de avance y recuperación son independientes de React, y la persistencia se inyecta desde `main.tsx`.
 
-## Restablecer datos de presentación
+## Restablecer datos
 
 En Bienvenida, debajo de la invitación al recorrido, una acción secundaria abre una confirmación con Cancelar y Restablecer datos. Solo al confirmar se recuperan los tres tutores, cuatro mascotas con sus fotografías y tres atenciones iniciales, se descartan los cambios de los ejemplos y los registros añadidos, y se reinicia el progreso guiado. La sesión permanece iniciada. No hay deshacer desde la interfaz.
 

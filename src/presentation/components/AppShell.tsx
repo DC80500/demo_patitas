@@ -188,7 +188,6 @@ export function AppShell({
           {children}
           <footer className="mt-auto flex flex-col flex-wrap items-start justify-between gap-3 pt-6 text-xs leading-[1.6] text-muted min-[701px]:flex-row min-[701px]:items-center min-[701px]:gap-4">
             <span>Patitas de Amor · Con amor por los animales</span>
-            <span>Versión preliminar</span>
           </footer>
         </main>
       </div>

@@ -50,10 +50,7 @@ export function ResetPresentationData({
       {done && (
         <div className="success-notice" role="status">
           <Icon name="check" />
-          <span>
-            Presentación restablecida. Los ejemplos iniciales están disponibles
-            y puedes comenzar un nuevo recorrido.
-          </span>
+          <span>Datos restablecidos. Puedes comenzar un nuevo recorrido.</span>
           <button
             className="icon-button"
             aria-label="Cerrar aviso de restablecimiento"
@@ -64,9 +61,6 @@ export function ResetPresentationData({
         </div>
       )}
       <div className="presentation-reset-row">
-        <p className="muted">
-          Vuelve a los ejemplos iniciales para preparar otra presentación.
-        </p>
         <button
           ref={trigger}
           type="button"
@@ -79,29 +73,30 @@ export function ResetPresentationData({
           }}
         >
           <Icon name="settings" />
-          Restablecer datos de presentación
+          Restablecer datos
         </button>
       </div>
       {open && (
         <Modal
-          title="¿Restablecer la presentación?"
-          eyebrow="PREPARAR UNA NUEVA PRESENTACIÓN"
+          title="¿Restablecer los datos?"
+          eyebrow="RESTABLECIMIENTO DE DATOS"
           onClose={close}
         >
           <div className="modal-body">
             <p className="text-sm leading-7">
-              Esta acción reemplazará los datos actuales de la presentación
-              guardados en este navegador:
+              Esta acción reemplazará los datos actuales guardados en este
+              navegador:
             </p>
             <ul className="reset-consequences">
               <li>
                 Se eliminarán los tutores, mascotas y atenciones que hayas
-                añadido, junto con los cambios realizados en los ejemplos.
+                añadido, junto con los cambios realizados en los registros
+                iniciales.
               </li>
               <li>
                 Se recuperarán los{' '}
                 <strong>3 tutores y 4 mascotas iniciales</strong>, con sus
-                fotografías y los historiales de ejemplo.
+                fotografías e historiales clínicos.
               </li>
               <li>
                 Se reiniciará el progreso del recorrido guiado para comenzar

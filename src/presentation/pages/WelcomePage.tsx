@@ -37,7 +37,7 @@ export function WelcomePage({ user }: { user: User }) {
           </p>
           <span className="banner-footnote">
             <span className="inline-block size-[.4rem] shrink-0 rounded-full bg-current" />{' '}
-            Estamos construyendo este espacio contigo
+            Acompañamos cada etapa de su vida
           </span>
         </div>
         <div

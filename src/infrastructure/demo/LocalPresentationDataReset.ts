@@ -19,7 +19,7 @@ export class LocalPresentationDataReset implements PresentationDataReset {
         snapshot.set(key, storage.getItem(key))
     } catch {
       throw new Error(
-        'No se pudo acceder a los datos de presentación. No se realizó el restablecimiento.',
+        'No se pudo acceder a los datos. No se realizó el restablecimiento.',
       )
     }
     const initial = new Map<string, string>([
@@ -53,7 +53,7 @@ export class LocalPresentationDataReset implements PresentationDataReset {
           }
       throw new Error(
         restored
-          ? 'No se pudo restablecer la presentación. Los datos anteriores se recuperaron; puedes reintentar.'
+          ? 'No se pudieron restablecer los datos. Los datos anteriores se recuperaron; puedes reintentar.'
           : 'No se pudo completar el restablecimiento ni recuperar todos los datos anteriores. Revisa los permisos y el espacio del navegador antes de reintentar.',
       )
     }
